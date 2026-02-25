@@ -16,12 +16,12 @@ declare global {
 
 export default function UnityResearchPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [unityInstance, setUnityInstance] = useState<any>(null)
   const [progress, setProgress] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [isPortrait, setIsPortrait] = useState(false)
 
-  // Detect screen size & orientation
   useEffect(() => {
     const checkDevice = () => {
       setIsMobile(window.innerWidth < 768)
@@ -47,12 +47,23 @@ export default function UnityResearchPage() {
           companyName: 'Research Project',
           productName: 'A* vs JPS Benchmark',
           productVersion: '1.0',
+
+          // 🔥 Mobile Optimization
           matchWebGLToCanvasSize: true,
-          devicePixelRatio: 1,
+          devicePixelRatio: isMobile ? 0.7 : 1,
         },
         (p: number) => setProgress(p)
       )
-      .then(() => setIsLoaded(true))
+      .then((instance: any) => {
+        setUnityInstance(instance)
+        setIsLoaded(true)
+      })
+  }
+
+  const handleFullscreen = () => {
+    if (unityInstance) {
+      unityInstance.SetFullscreen(1)
+    }
   }
 
   return (
@@ -69,7 +80,7 @@ export default function UnityResearchPage() {
           Optimalisasi Algoritma Pathfinding A* dengan Jump Point Search
         </h1>
         <p className="mt-2 text-gray-400 text-sm md:text-base">
-          Implementasi dan Benchmark pada Game 2D Grid-Based Movement
+          Benchmark A* vs A*+JPS pada Grid-Based Movement
         </p>
       </header>
 
@@ -80,8 +91,17 @@ export default function UnityResearchPage() {
             ${isMobile ? 'w-full' : 'w-[800px]'}
           `}
         >
-          <div className="bg-gray-900 px-4 py-2 text-sm text-gray-300">
-            Interactive Benchmark Environment
+          <div className="flex justify-between items-center bg-gray-900 px-4 py-2 text-sm text-gray-300">
+            <span>Interactive Benchmark Environment</span>
+
+            {isLoaded && (
+              <button
+                onClick={handleFullscreen}
+                className="bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded text-xs"
+              >
+                Fullscreen
+              </button>
+            )}
           </div>
 
           <div
@@ -90,12 +110,12 @@ export default function UnityResearchPage() {
               ${isMobile ? 'aspect-video' : 'h-[600px]'}
             `}
           >
-            {/* Rotate Device Overlay */}
+            {/* Rotate Overlay */}
             {isMobile && isPortrait && (
               <div className="absolute inset-0 z-20 flex items-center justify-center bg-black text-white text-center p-6">
                 <div>
                   <p className="text-lg font-semibold mb-2">
-                    Please Rotate Your Device
+                    Rotate Your Device
                   </p>
                   <p className="text-sm text-gray-400">
                     This simulation runs best in landscape mode.
@@ -108,7 +128,7 @@ export default function UnityResearchPage() {
             {!isLoaded && (
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900 z-10">
                 <p className="mb-4 text-sm text-gray-400">
-                  Initializing WebGL Environment...
+                  Optimizing WebGL for Your Device...
                 </p>
                 <div className="w-56 h-3 bg-gray-700 rounded">
                   <div
@@ -123,7 +143,6 @@ export default function UnityResearchPage() {
             )}
 
             <canvas
-              id="unity-canvas"
               ref={canvasRef}
               className="w-full h-full"
             />
@@ -131,20 +150,8 @@ export default function UnityResearchPage() {
         </div>
       </section>
 
-      <main className="max-w-4xl mx-auto px-6 py-10 space-y-8">
-        <section>
-          <h2 className="text-lg font-semibold mb-2">Tentang Penelitian</h2>
-          <p className="text-gray-400 text-sm md:text-base leading-relaxed">
-            Penelitian ini membandingkan performa algoritma A* dan A* dengan
-            Jump Point Search (JPS) pada lingkungan grid-based movement.
-            Evaluasi dilakukan berdasarkan metrik completeness, optimality,
-            time complexity, dan space complexity.
-          </p>
-        </section>
-      </main>
-
-      <footer className="text-center text-gray-600 py-6 border-t border-gray-800 text-sm">
-        © 2026 Research Project – Pathfinding Optimization Study
+      <footer className="text-center text-gray-600 py-6 border-t border-gray-800 text-sm mt-10">
+        © 2026 Pathfinding Optimization Research
       </footer>
     </div>
   )
