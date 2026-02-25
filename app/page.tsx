@@ -150,8 +150,37 @@ export default function UnityResearchPage() {
             />
           </div>
         </div>
+        
       </section>
-      
+
+      <section className="mt-10 px-4 max-w-4xl mx-auto space-y-8">
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold">Tentang Penelitian</h2>
+          <p className="text-gray-400 leading-relaxed">
+        Penelitian ini bertujuan untuk membandingkan performa algoritma 
+        <strong> A* </strong> dan 
+        <strong> A* dengan Jump Point Search (JPS) </strong> 
+        pada lingkungan game berbasis grid movement. 
+        Evaluasi dilakukan berdasarkan metrik completeness, optimality, 
+        time complexity, dan space complexity.
+          </p>
+          <p className="text-gray-400 leading-relaxed">
+        Game ini berfungsi sebagai media benchmarking untuk menguji 
+        efisiensi algoritma dalam kondisi peta berbeda: open map, 
+        structured map, dan obstacle-dense map.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold">Gameplay Singkat</h2>
+          <ul className="list-disc list-inside text-gray-400 space-y-2">
+        <li>Game 2D top-down action survival berbasis grid.</li>
+        <li>Player bergerak otomatis mengikuti path hasil klik.</li>
+        <li>Musuh mengejar player menggunakan algoritma pathfinding.</li>
+        <li>Perbandingan algoritma dapat dianalisis melalui performa pergerakan musuh.</li>
+          </ul>
+        </div>
+      </section>
       <footer className="text-center text-gray-600 py-6 border-t border-gray-800 text-sm mt-10">
         © 2026 Pathfinding Optimization Research
       </footer>
