@@ -110,7 +110,7 @@ export default function UnityResearchPage() {
           <div
             className={`
               relative
-              ${isMobile ? 'aspect-video' : 'h-[600px]'}
+              ${isMobile ? 'w-full h-[400px]' : 'w-full h-[450px]'}
             `}
           >
             {isMobile && isPortrait && (
@@ -151,7 +151,7 @@ export default function UnityResearchPage() {
           </div>
         </div>
       </section>
-
+      
       <footer className="text-center text-gray-600 py-6 border-t border-gray-800 text-sm mt-10">
         © 2026 Pathfinding Optimization Research
       </footer>
