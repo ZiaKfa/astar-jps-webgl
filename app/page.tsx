@@ -11,12 +11,14 @@ declare global {
       config: any,
       onProgress?: (progress: number) => void
     ) => Promise<any>
+    Module?: any
   }
 }
 
 export default function UnityResearchPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [unityInstance, setUnityInstance] = useState<any>(null)
+  const unityInstanceRef = useRef<any>(null)
+
   const [progress, setProgress] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
@@ -36,6 +38,10 @@ export default function UnityResearchPage() {
   const handleLoad = () => {
     if (!canvasRef.current || !window.createUnityInstance) return
 
+    window.Module = {
+      keyboardListeningElement: '#unity-canvas',
+    }
+
     window
       .createUnityInstance(
         canvasRef.current,
@@ -47,23 +53,23 @@ export default function UnityResearchPage() {
           companyName: 'Research Project',
           productName: 'A* vs JPS Benchmark',
           productVersion: '1.0',
-
-          // 🔥 Mobile Optimization
           matchWebGLToCanvasSize: true,
-          devicePixelRatio: isMobile ? 0.7 : 1,
+          devicePixelRatio: isMobile ? 1 : window.devicePixelRatio,
         },
         (p: number) => setProgress(p)
       )
-      .then((instance: any) => {
-        setUnityInstance(instance)
+      .then((unityInstance) => {
+        unityInstanceRef.current = unityInstance
         setIsLoaded(true)
       })
+      .catch((err) => console.error(err))
   }
 
   const handleFullscreen = () => {
-    if (unityInstance) {
-      unityInstance.SetFullscreen(1)
-    }
+    if (!unityInstanceRef.current) return
+
+    // 🔥 TRUE FULLSCREEN
+    unityInstanceRef.current.SetFullscreen(1)
   }
 
   return (
@@ -76,11 +82,11 @@ export default function UnityResearchPage() {
       />
 
       <header className="py-6 text-center border-b border-gray-800">
-        <h1 className="text-2xl md:text-3xl font-bold">
+        <h1 className="text-xl md:text-3xl font-bold">
           Optimalisasi Algoritma Pathfinding A* dengan Jump Point Search
         </h1>
         <p className="mt-2 text-gray-400 text-sm md:text-base">
-          Benchmark A* vs A*+JPS pada Grid-Based Movement
+          Benchmark pada Game 2D Grid-Based Movement
         </p>
       </header>
 
@@ -88,20 +94,17 @@ export default function UnityResearchPage() {
         <div
           className={`
             relative bg-gray-800 rounded-xl shadow-2xl overflow-hidden border border-gray-700
-            ${isMobile ? 'w-full' : 'w-[800px]'}
+            ${isMobile ? 'w-[95%] max-w-[420px]' : 'w-[800px]'}
           `}
         >
           <div className="flex justify-between items-center bg-gray-900 px-4 py-2 text-sm text-gray-300">
             <span>Interactive Benchmark Environment</span>
-
-            {isLoaded && (
-              <button
-                onClick={handleFullscreen}
-                className="bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded text-xs"
-              >
-                Fullscreen
-              </button>
-            )}
+            <button
+              onClick={handleFullscreen}
+              className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-xs"
+            >
+              Fullscreen
+            </button>
           </div>
 
           <div
@@ -110,7 +113,6 @@ export default function UnityResearchPage() {
               ${isMobile ? 'aspect-video' : 'h-[600px]'}
             `}
           >
-            {/* Rotate Overlay */}
             {isMobile && isPortrait && (
               <div className="absolute inset-0 z-20 flex items-center justify-center bg-black text-white text-center p-6">
                 <div>
@@ -124,13 +126,12 @@ export default function UnityResearchPage() {
               </div>
             )}
 
-            {/* Loading */}
             {!isLoaded && (
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900 z-10">
                 <p className="mb-4 text-sm text-gray-400">
-                  Optimizing WebGL for Your Device...
+                  Initializing WebGL Environment...
                 </p>
-                <div className="w-56 h-3 bg-gray-700 rounded">
+                <div className="w-48 h-3 bg-gray-700 rounded">
                   <div
                     className="h-3 bg-blue-500 rounded transition-all duration-200"
                     style={{ width: `${progress * 100}%` }}
@@ -143,6 +144,7 @@ export default function UnityResearchPage() {
             )}
 
             <canvas
+              id="unity-canvas"
               ref={canvasRef}
               className="w-full h-full"
             />
