@@ -54,7 +54,7 @@ export default function UnityResearchPage() {
           productName: 'A* vs JPS Benchmark',
           productVersion: '1.0',
           matchWebGLToCanvasSize: true,
-          devicePixelRatio: isMobile ? 2 : window.devicePixelRatio,
+          devicePixelRatio: isMobile ? 0.2 : window.devicePixelRatio,
         },
         (p: number) => setProgress(p)
       )
