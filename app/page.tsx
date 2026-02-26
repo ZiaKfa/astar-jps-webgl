@@ -167,9 +167,10 @@ export default function UnityResearchPage() {
           </p>
           <p className="text-gray-400 leading-relaxed text-justify">
         Game ini berfungsi sebagai media benchmarking untuk menguji 
-        efisiensi algoritma dalam kondisi peta berbeda: open map, 
-        structured map, dan obstacle-dense map.
+        efisiensi algoritma dalam kondisi peta berbeda
           </p>
+        <p>Link Kuisioner Beta Testing :</p>
+        <a href="https://forms.gle/gefJXzmMr3SUZ3LHA" target="_blank" className="text-blue-400 hover:underline">Klik Disini!</a>
         </div>
 
         <div className="space-y-4">
