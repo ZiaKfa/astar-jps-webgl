@@ -3,6 +3,7 @@
 
 import { useRef, useState, useEffect } from 'react'
 import Script from 'next/script'
+import Image from 'next/image'
 
 declare global {
   interface Window {
@@ -120,7 +121,7 @@ export default function UnityResearchPage() {
                     Rotate Your Device
                   </p>
                   <p className="text-sm text-gray-400">
-                    This simulation runs best in landscape mode.
+                    This game runs best in landscape mode.
                   </p>
                 </div>
               </div>
@@ -156,7 +157,7 @@ export default function UnityResearchPage() {
       <section className="mt-10 px-4 max-w-4xl mx-auto space-y-8">
         <div className="space-y-4">
           <h2 className="text-xl font-semibold">Tentang Penelitian</h2>
-          <p className="text-gray-400 leading-relaxed">
+          <p className="text-gray-400 leading-relaxed text-justify">
         Penelitian ini bertujuan untuk membandingkan performa algoritma 
         <strong> A* </strong> dan 
         <strong> A* dengan Jump Point Search (JPS) </strong> 
@@ -164,7 +165,7 @@ export default function UnityResearchPage() {
         Evaluasi dilakukan berdasarkan metrik completeness, optimality, 
         time complexity, dan space complexity.
           </p>
-          <p className="text-gray-400 leading-relaxed">
+          <p className="text-gray-400 leading-relaxed text-justify">
         Game ini berfungsi sebagai media benchmarking untuk menguji 
         efisiensi algoritma dalam kondisi peta berbeda: open map, 
         structured map, dan obstacle-dense map.
@@ -172,14 +173,163 @@ export default function UnityResearchPage() {
         </div>
 
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Gameplay Singkat</h2>
-          <ul className="list-disc list-inside text-gray-400 space-y-2">
-        <li>Game 2D top-down action survival berbasis grid.</li>
-        <li>Player bergerak otomatis mengikuti path hasil klik.</li>
-        <li>Musuh mengejar player menggunakan algoritma pathfinding.</li>
-        <li>Perbandingan algoritma dapat dianalisis melalui performa pergerakan musuh.</li>
-          </ul>
+          <h2 className="text-xl font-semibold">Apa itu Algoritma A* ?</h2>
+          <p className="text-gray-400 leading-relaxed text-justify">
+        Algoritma A* adalah algoritma pencarian yang digunakan untuk menemukan 
+        jalur terpendek antara dua titik dalam sebuah graf. A* menggunakan 
+        fungsi heuristik untuk memperkirakan biaya dari titik saat ini ke tujuan, 
+        sehingga dapat mengarahkan pencarian secara lebih efisien dibandingkan 
+        algoritma pencarian lainnya.
+          </p>
+          <Image src="/astar.webp" alt="Visualisasi Algoritma A*" width={500} height={400} className="w-full max-w-md mx-auto mt-4 rounded-lg shadow-lg" />
         </div>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold">Apa itu Algoritma A* dengan Jump Point Search (JPS) ?</h2>
+          <p className="text-gray-400 leading-relaxed text-justify">
+        Algoritma A* dengan Jump Point Search (JPS) adalah versi optimasi dari algoritma A* yang dirancang untuk meningkatkan efisiensi pencarian jalur dalam
+         peta berbasis grid. JPS mengurangi jumlah node yang perlu diproses dengan memanfaatkan struktur grid untuk &quot;melompat&quot; langsung ke titik-titik penting, 
+         sehingga menghindari eksplorasi node-node yang tidak perlu. Hasilnya, JPS dapat secara signifikan mempercepat pencarian jalur dibandingkan dengan A* standar, 
+         terutama pada peta yang memiliki banyak ruang terbuka.
+        
+          </p>
+          <Image src="/jps.webp" alt="Visualisasi Algoritma A*" width={500} height={400} className="w-full max-w-md mx-auto mt-4 rounded-lg shadow-lg" />
+        </div>
+                <div className="space-y-4">
+          <h2 className="text-xl font-semibold">Perbandingan</h2>
+          <p className="text-gray-400 leading-relaxed text-justify">
+          Berikut ini adalah visualisasi perbandingan antara algoritma A* standar dan A* dengan Jump Point Search (JPS) dalam lingkungan game berbasis grid.
+          Pada gambar pertama, kita dapat melihat jalur yang dihasilkan oleh algoritma A* standar. Algoritma ini mengeksplorasi lebih banyak node di sekitar jalur optimal,
+          Sedangkan pada gambar kedua, kita dapat melihat jalur yang dihasilkan oleh algoritma A* dengan JPS. Algoritma ini mengeksplorasi lebih sedikit node karena menggunakan 
+          teknik jump point search untuk menghindari eksplorasi node-node yang tidak perlu.
+          </p>         
+          <Image src="/vs.jpg" alt="Visualisasi Algoritma A*" width={500} height={400} className="w-full max-w-md mx-auto mt-4 rounded-lg shadow-lg" />
+        </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">
+          Tutorial Penggunaan Halaman Benchmark
+        </h2>
+
+        <p className="text-gray-400 leading-relaxed text-justify">
+          Halaman benchmark digunakan untuk melakukan pengujian performa serta
+          visualisasi algoritma pathfinding <b>A*</b> dan{" "}
+          <b>A* dengan Jump Point Search (JPS)</b> pada peta berbasis grid.
+        </p>
+
+        <Image
+          src="/tutor.png"
+          alt="Tutorial Halaman Benchmark"
+          width={500}
+          height={400}
+          className="w-full max-w-md mx-auto mt-4 rounded-lg shadow-lg"
+        />
+
+        {/* 1 */}
+        <h3 className="text-lg font-semibold mt-4">
+          Memilih Map Benchmark
+        </h3>
+        <ol className="list-decimal pl-6 text-gray-400 space-y-1 text-justify">
+          <li>
+            Pada panel benchmark di sebelah kiri layar, pilih map yang ingin
+            digunakan melalui <b>dropdown pilihan map</b>.
+          </li>
+          <li>
+            Setelah memilih map, tekan tombol <b>Render Map</b> untuk menampilkan
+            peta pada area utama.
+          </li>
+        </ol>
+
+        {/* 2 */}
+        <h3 className="text-lg font-semibold mt-4">
+          Menentukan Titik Start dan Goal
+        </h3>
+        <ol className="list-decimal pl-6 text-gray-400 space-y-1 text-justify">
+          <li>
+            Masukkan koordinat posisi awal pada bagian <b>Start (X, Y)</b>.
+          </li>
+          <li>
+            Masukkan koordinat tujuan pada bagian <b>Goal (X, Y)</b>.
+          </li>
+          <li>
+            Pastikan koordinat berada pada area yang dapat dilalui (walkable).
+          </li>
+        </ol>
+
+        {/* 3 */}
+        <h3 className="text-lg font-semibold mt-4">
+          Menjalankan Benchmark Algoritma
+        </h3>
+        <ol className="list-decimal pl-6 text-gray-400 space-y-1 text-justify">
+          <li>
+            Tekan tombol <b>Benchmark Map</b> untuk menjalankan proses benchmark.
+          </li>
+          <li>
+            Sistem akan menjalankan pengujian algoritma A* dan A* dengan JPS secara berurutan pada map yang telah dipilih.
+          </li>
+            <li>
+            Selama proses berlangsung, progres benchmark dapat dilihat pada{" "}
+            <b>panel loading progress</b> di bagian tengah layar. 
+            (<b>Hati-hati, proses benchmark pada map yang kompleks dapat memakan waktu yang lama, 
+            hanya lakukan pada map arena yang sederhana untuk hasil yang lebih cepat)</b>
+            </li>
+          <li>
+            Setelah selesai, hasil benchmark akan ditampilkan pada{" "}
+            <b>panel hasil benchmark</b> di bagian bawah layar.
+          </li>
+        </ol>
+
+        {/* 4 */}
+        <h3 className="text-lg font-semibold mt-4">
+          Visualisasi Algoritma Pathfinding
+        </h3>
+        <p className="text-gray-400 text-justify">
+          Untuk melihat proses pencarian jalur secara visual:
+        </p>
+        <ol className="list-decimal pl-6 text-gray-400 space-y-1 text-justify">
+          <li>
+            Tekan tombol <b>Render AStar</b> untuk menampilkan visualisasi
+            algoritma A*.
+          </li>
+          <li>
+            Tekan tombol <b>Render JPS</b> untuk menampilkan visualisasi algoritma
+            A* dengan Jump Point Search.
+          </li>
+          <li>
+            Jalur hasil pencarian akan divisualisasikan langsung pada map.
+          </li>
+        </ol>
+
+        {/* 5 */}
+        <h3 className="text-lg font-semibold mt-4">
+          Menghapus Jalur Visualisasi
+        </h3>
+        <ul className="list-disc pl-6 text-gray-400 text-justify">
+          <li>
+            Gunakan tombol <b>Clear Path</b> untuk menghapus jalur yang telah
+            divisualisasikan sebelum melakukan percobaan berikutnya.
+          </li>
+        </ul>
+
+        {/* 6 */}
+        <h3 className="text-lg font-semibold mt-4">
+          Kembali ke Menu Utama
+        </h3>
+        <ul className="list-disc pl-6 text-gray-400 text-justify">
+          <li>
+            Tekan tombol <b>Main Menu</b> di pojok kanan atas layar untuk kembali
+            ke halaman utama aplikasi.
+          </li>
+        </ul>
+
+        <hr className="border-gray-700 my-4" />
+
+        <p className="text-gray-400 leading-relaxed text-justify">
+          Halaman benchmark ini memungkinkan pengguna untuk membandingkan
+          performa serta memahami perbedaan proses pencarian jalur antara
+          algoritma A* dan A* dengan Jump Point Search melalui pengujian dan
+          visualisasi secara langsung.
+        </p>
+      </div>
       </section>
       <footer className="text-center text-gray-600 py-6 border-t border-gray-800 text-sm mt-10">
         © 2026 Pathfinding Optimization Research
