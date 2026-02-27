@@ -180,8 +180,9 @@ export default function UnityResearchPage() {
         jalur terpendek antara dua titik dalam sebuah graf. A* menggunakan 
         fungsi heuristik untuk memperkirakan biaya dari titik saat ini ke tujuan, 
         sehingga dapat mengarahkan pencarian secara lebih efisien dibandingkan 
-        algoritma pencarian lainnya.
-          </p>
+        algoritma pencarian lainnya. </p> 
+        <a href='https://ai.stanford.edu/~nilsson/OnlinePubs-Nils/PublishedPapers/astar.pdf' className="text-blue-400 hover:underline">Klik disini untuk melihat paper A* asli</a>
+          
           <Image src="/astar.webp" alt="Visualisasi Algoritma A*" width={500} height={400} className="w-full max-w-md mx-auto mt-4 rounded-lg shadow-lg" />
         </div>
         <div className="space-y-4">
@@ -191,8 +192,8 @@ export default function UnityResearchPage() {
          peta berbasis grid. JPS mengurangi jumlah node yang perlu diproses dengan memanfaatkan struktur grid untuk &quot;melompat&quot; langsung ke titik-titik penting, 
          sehingga menghindari eksplorasi node-node yang tidak perlu. Hasilnya, JPS dapat secara signifikan mempercepat pencarian jalur dibandingkan dengan A* standar, 
          terutama pada peta yang memiliki banyak ruang terbuka.
-        
-          </p>
+         </p><a href='https://harabor.net/data/papers/harabor-grastien-aaai11.pdf' className="text-blue-400 hover:underline">Klik disini untuk melihat paper JPS asli</a>
+          
           <Image src="/jps.webp" alt="Visualisasi Algoritma A*" width={500} height={400} className="w-full max-w-md mx-auto mt-4 rounded-lg shadow-lg" />
         </div>
                 <div className="space-y-4">
@@ -253,6 +254,9 @@ export default function UnityResearchPage() {
           </li>
           <li>
             Pastikan koordinat berada pada area yang dapat dilalui (walkable).
+          </li>
+          <li>
+            Contoh koordinat: Start (4, 4) dan Goal (34, 34) untuk map arena. Start (66, 103) dan Goal (441, 298) untuk map AR0711SR, dan Start (9, 971) dan Goal (982, 43) untuk map TheFrozenSea.
           </li>
         </ol>
 
